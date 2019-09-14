@@ -1,0 +1,37 @@
+[
+  {
+    "date": "2019-09-11 10:15:30",
+    "sum": 4280.00,
+    "balance": 2000.00,
+    "description": "Silpo",
+    "clientId": 13476
+  },
+  {
+    "date": "2019-08-20 12:34:14",
+    "sum": 3710.00,
+    "balance": 4500.00,
+    "description": "OKKO",
+    "clientId": 42764
+  },
+  {
+    "date": "2019-07-18 14:15:30",
+    "sum": 270.00,
+    "balance": 920.00,
+    "description": "Wizoria",
+    "clientId": 13476
+  },
+  {
+    "date": "2019-06-03 16:15:30",
+    "sum": 1490.00,
+    "balance": 6280.00,
+    "description": "Theatre",
+    "clientId": 42764
+  },
+  {
+    "date": "2019-07-24 11:15:30",
+    "sum": 2910.00,
+    "balance": 9280.00,
+    "description": "ATB",
+    "clientId": 29743
+  }
+]

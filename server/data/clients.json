@@ -1,0 +1,23 @@
+[
+  {
+    "clientId": 13476,
+    "firstName": "Joe",
+    "lastName": "Smith",
+    "birthDate": "1984-10-25",
+    "hasPet": true
+  },
+  {
+    "clientId": 42764,
+    "firstName": "Anna",
+    "lastName": "Wu",
+    "birthDate": "1984-10-25",
+    "hasPet": true
+  },
+  {
+    "clientId": 29743,
+    "firstName": "John",
+    "lastName": "Oldman",
+    "birthDate": "1984-10-25",
+    "hasPet": true
+  }
+]
