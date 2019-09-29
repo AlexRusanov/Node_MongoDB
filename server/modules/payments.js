@@ -1,34 +1,57 @@
 const express = require('express');
-
+var ObjectID = require('mongodb').ObjectID;
 const router = express.Router();
+const {jsonHandler} = require('../services/jsonHandler');
+const {collectionHandler} = require('../services/collectionHandler');
+const paymentCollection = 'payments';
 
-const { jsonHandler } = require('../services/jsonHandler');
+module.exports.routePayments = function (db) {
+    router.get('/:paymentId?', function (req, res) {
+        const paymentId = req.params.paymentId;
+        const collection = db.collection(paymentCollection);
+        const filter = {};
 
-router.get('/', function (req, res) {
-    const data = require('../data/payments.json');
-
-    res.send(jsonHandler.createResponse(data));
-});
-
-router.get('/clients/:clientId?', function (req, res) {
-    const data = require('../data/payments.json');
-    const clientId = req.params.clientId;
-
-    let response = {};
-
-    try {
-        let result = data;
-
-        if (clientId) {
-            result = Array.isArray(result) && result.filter(pay => pay.clientId === +clientId) || [];
+        if (paymentId) {
+            filter['_id'] = new ObjectID(paymentId);
         }
 
-        response = jsonHandler.createResponse(result);
-    } catch(err) {
-        response = jsonHandler.createResponse([], false, err.message);
-    }
+        collectionHandler
+            .createResponse(collection.find(filter))
+            .then(items => {
+                res
+                    .status(200)
+                    .send(
+                        jsonHandler.createResponse(() => {
+                            return items;
+                        })
+                    );
+            })
+            .catch(error => {
+                res
+                    .status(400)
+                    .send(
+                        jsonHandler.createResponse(() => {
+                            throw new Error(error)
+                        })
+                    );
+            });
+    });
 
-    res.send(response);
-});
+    router.get('/clients/:clientId?', function (req, res) {
+        const clientId = req.params.clientId;
+        const collection = db.collection(paymentCollection);
+        const filter = {};
 
-module.exports.routerPayments = router;
+        if (clientId) {
+            filter['clientId'] = new ObjectID(clientId);
+        }
+
+        collection
+            .find(filter)
+            .toArray((err, docs) => {
+
+            });
+    });
+
+    return router;
+};

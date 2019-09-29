@@ -1,11 +1,22 @@
 class JsonHandler {
-    static createResponse(data = [], status = true, message = '') {
-        return JSON.stringify({
-            status,
-            data,
-            message
-        })
+
+    static createResponse(callBack){
+        const response = {
+            status:true,
+            message:"",
+            data:[]
+        };
+
+        try {
+            response.data = callBack();
+        }catch (e){
+            response.status =false;
+            response.message = e.message
+        }
+
+        return JSON.stringify(response);
     }
+
 }
 
 module.exports.jsonHandler = JsonHandler;

@@ -1,10 +1,25 @@
 const express = require('express');
-const payments = require('./modules/payments');
-const clients = require('./modules/clients');
+const mongoClient = require('mongodb').MongoClient;
+const db = require('./config/db');
 
 const app = express();
 
-app.use('/payments', payments.routerPayments);
-app.use('/clients', clients.routerClients);
+const client = new mongoClient(db.url,
+    {useNewUrlParser: true}
+);
 
-app.listen('3000');
+client.connect((err, connection) => {
+
+    require('./routes/route')(app,
+        connection.db('clientdb')
+    );
+
+    app.listen('3000', () => {
+        console.log('We are live!');
+    });
+
+    console.log('Error ->', err, db);
+
+    // perform actions on the collection object
+    // client.close();
+});

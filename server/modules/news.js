@@ -1,24 +1,23 @@
 const express = require('express');
-var ObjectID = require('mongodb').ObjectID;
 const router = express.Router();
+var ObjectID = require('mongodb').ObjectID;
 const {jsonHandler} = require('../services/jsonHandler');
-const clientCollection = 'clients';
+const newsCollection = 'news';
 
-module.exports.routeClients = function (db) {
+module.exports.routeNews = function (db) {
 
-    router.get('/:clientId?', function (req, res) {
-        const clientId = req.params.clientId;
-        const collection = db.collection(clientCollection);
+    router.get('/:newsId?', function (req, res) {
+        const newsId = req.params.newsId;
+        const collection = db.collection(newsCollection);
         const filter = {};
 
-        if (clientId) {
-            filter['_id'] = new ObjectID(clientId);
+        if (newsId) {
+            filter['_id'] = new ObjectID(newsId);
         }
 
         collection
             .find(filter)
             .toArray((err, docs) => {
-
                 (
                     err
                         ? res.status(403)
@@ -32,9 +31,7 @@ module.exports.routeClients = function (db) {
                         return docs;
                     })
                 );
-
             });
-
     });
 
     return router;
